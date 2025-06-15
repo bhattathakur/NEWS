@@ -38,7 +38,7 @@ finnhub_api_key=os.getenv("FINNHUB_API_KEY") #api key for finnhub
 
 #eastern time zone
 eastern=pytz.timezone('US/EASTERN')
-st.write(f"current datetime: {datetime.now(eastern)}")
+st.write(f"current datetime: {datetime.now(eastern).strftime('%H:%M, %Y-%m-%d')}")
 
 
 finnhub_client=finnhub.Client(api_key=finnhub_api_key)
@@ -99,7 +99,7 @@ temp_df2=temp_df2.reset_index(drop=True)
 #read aloud part ... for this dataframe needs to be non-empty
 if temp_df2.empty:st.stop()
 #want sentiment analysis
-sentiment=st.sidebar.checkbox("Want Centiment Analyis with transformers?")
+sentiment=st.sidebar.checkbox("Select for Sentiment Analyis with transformers")
 #Load sentiment pipeline once (might take a few seconds)
 @st.cache_resource
 def load_model():
@@ -110,16 +110,10 @@ if sentiment:
    temp_df2['sentiment_result']=temp_df2['headline'].apply(lambda x: sentiment_model(x)[0])
    temp_df2['sentiment']=temp_df2['sentiment_result'].apply(lambda x:x.get('label'))
    temp_df2['score']=temp_df2['sentiment_result'].apply(lambda x:x.get('score'))
-# else:
-#    temp_df2['sentiment']='N/A'
-#    temp_df2['score']='N/A'
+
 
 #st.write(f"temp_df1: {temp_df1}")
 if debug:st.dataframe(temp_df2)
-#create a query based on the choosen options
-# query_statement=f"""
-
-# """
 plain_text="" #save in the file
 # Display each row as an HTML paragraph
 sentiment_color={'POSITIVE':'green','NEGATIVE':'red','NEUTRAL':'gray'}
@@ -146,20 +140,6 @@ for _, row in temp_df2.iterrows():
     plain_text += f"Link     :{row['url']}\n"
     plain_text += "-" * 40 + "\n"
 
-# #want sentiment analysis
-# sentiment=st.sidebar.checkbox("Want Centiment Analyis with transformers?")
-# #Load sentiment pipeline once (might take a few seconds)
-# @st.cache_resource
-# def load_model():
-#     return pipeline("sentiment-analysis", model="distilbert-base-uncased-finetuned-sst-2-english")
-# #sentiment analysis
-# if sentiment:
-#    sentiment_model=load_model()
-#    temp_df2['sentiment_result']=temp_df2['headline'].apply(lambda x: sentiment_model(x)[0])
-#    temp_df2['sentiment']=temp_df2['sentiment_result'].apply(lambda x:x.get('label'))
-#    temp_df2['score']=temp_df2['sentiment_result'].apply(lambda x:x.get('score'))
-
-# Download button for .txt file
 
 if debug:st.dataframe(temp_df2)
 st.sidebar.download_button(
@@ -186,57 +166,5 @@ if read_aloud:
   """
   components.html(js_code, height=0)
 
-
-  #  #changing text to speech
-  #  tts=gTTS(text=reading_text,lang='en')
-
-  #  with tempfile.NamedTemporaryFile(delete=False, suffix=".mp3") as tmp:
-  #    tts.save(tmp.name)
-  #    st.audio(tmp.name, format="audio/mp3")
-
-
-
-# if debug:
-#     print(headline_news[:3])
-
-# #function to parse the json from top_news or ticker news
-# def parse_news(top_news):
-#   temp_text=""
-#   for i,news in enumerate(top_news):
-#     unix_datetime=top_news[i].get('datetime')
-#     estdatetime=datetime.fromtimestamp(unix_datetime,tz=eastern).strftime('%H:%M:%S, %Y-%m-%d')
-#     headline=top_news[i].get('headline')
-#     source=top_news[i].get('source')
-#     url=top_news[i].get('url')
-#     news_text=f"""
-#   datetime : {estdatetime}
-#   headline : {headline}
-#   source   : {source}
-#   url      : {url}
-#     """
-#     temp_text+=news_text
-#     #print(f"datetime:{estdatetime}\nheadline:{headline}\nsource:{source}\nurl: {url}")
-#   #print(temp_text)
-#   return temp_text
-
-# if debug:
-#    print(parse_news(headline_news))
-
-
-# #
-
-
-# #streamlit program
-# st.title("📰 Stock News Sentiment App")
-# st.header("LAST 50 NEWS")
-
-# #sidebar
-# st.sidebar.title(
-#    'test'
-# )
-
-# st.text(parse_news(headline_news))
-
-
-
-
+st.sidebar.write("\n\n\n")
+st.sidebar.write("⚠️Disclaimer: Only Intended for Research and Education")

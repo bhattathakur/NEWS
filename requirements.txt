@@ -1,5 +1,12 @@
 streamlit
+streamlit-autorefresh
+streamlit-extras
+watchdog
 pandas
-finnhub-python
-gTTS
 pytz
+finnhub-python
+matplotlib
+torch
+transformers
+sentencepiece
+accelerate
