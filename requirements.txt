@@ -8,5 +8,5 @@ finnhub-python
 matplotlib
 torch
 transformers
-sentencepiece
-accelerate
+#sentencepiece
+#accelerate

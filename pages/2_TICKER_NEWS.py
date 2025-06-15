@@ -35,6 +35,7 @@ components.html(
 )
 
 tab_names=["TICKER NEWS","SENTIMENT STATISTICS"]
+finnhub_api_key=st.secrets['finnhub']['apikey']#os.getenv("FINNHUB_API_KEY") #api key for finnhub
 
 tab1,tab2=st.tabs(tab_names)
 
@@ -45,7 +46,7 @@ with tab1:
     
 
 
-    finnhub_api_key=st.secrets['finnhub']['apikey']#os.getenv("FINNHUB_API_KEY") #api key for finnhub
+    #finnhub_api_key=st.secrets['finnhub']['apikey']#os.getenv("FINNHUB_API_KEY") #api key for finnhub
 
 
     #eastern time zone
