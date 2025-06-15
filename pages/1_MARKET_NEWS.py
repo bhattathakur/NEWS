@@ -33,7 +33,7 @@ components.html(
 )
 
 
-finnhub_api_key=os.getenv("FINNHUB_API_KEY") #api key for finnhub
+finnhub_api_key=st.secrets['finnhub']['apikey']#os.getenv("FINNHUB_API_KEY") #api key for finnhub
 
 
 #eastern time zone
